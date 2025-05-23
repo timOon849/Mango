@@ -10,7 +10,7 @@ public class APIService : MonoBehaviour
     public static APIService Instance { get; private set; }
 
     private string _authToken;
-    private string _baseUrl = "http://localhost:5185/api/";
+    private string _baseUrl = "http://localhost:5295/api/";
 
     private void Awake()
     {
@@ -42,7 +42,7 @@ public class APIService : MonoBehaviour
     {
         string jsonData = $"{{\"username\":\"{username}\",\"password\":\"{password}\"}}";
 
-        using (UnityWebRequest request = new UnityWebRequest(_baseUrl + "Auth/login", "POST"))
+        using (UnityWebRequest request = new UnityWebRequest(_baseUrl + "User/login", "POST"))
         {
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
@@ -74,7 +74,7 @@ public class APIService : MonoBehaviour
         var userId = GetUserIdFromToken();
 
         // Формируем URL с ID пользователя
-        string url = $"{_baseUrl}User/coins/{userId}";
+        string url = $"{_baseUrl}Coins/balance/{userId}";
 
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
