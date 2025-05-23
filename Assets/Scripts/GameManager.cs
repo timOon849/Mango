@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     [SerializeField] private GameObject openPanel;
     private int starsCount;
-    private string CurrentUser => $"Stars_{APIService.Instance.UserId}";
+    private string CurrentUser => $"Stars_{APIService.Instance.UserId}";    
 
     private void Start()
     {

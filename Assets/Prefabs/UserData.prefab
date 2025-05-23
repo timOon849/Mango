@@ -209,4 +209,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   usernameText: {fileID: 4424315421717894372}
-  coinsText: {fileID: 7161078654536535818}
+  pointsText: {fileID: 7161078654536535818}

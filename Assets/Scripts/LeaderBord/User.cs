@@ -2,11 +2,11 @@
 public class User
 {
     public string username;
-    public int coins;
+    public int points;
 
-    public User(string username, int coins)
+    public User(string username, int points)
     {
         this.username = username;
-        this.coins = coins;
+        this.points = points;
     }
 }

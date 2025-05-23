@@ -216,7 +216,7 @@ public class APIService : MonoBehaviour
 
     public IEnumerator GetAllUsersCoins(Action<List<User>, string> callback)
     {
-        string url = $"{_baseUrl}user/all-coins"; // Adjust the endpoint as necessary
+        string url = $"{_baseUrl}User/leaderboard"; // Adjust the endpoint as necessary
 
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
@@ -238,7 +238,7 @@ public class APIService : MonoBehaviour
                 }
                 catch (Exception ex)
                 {
-                    Debug.LogError($"Error parsing users response: {ex.Message}");
+                    Debug.LogError($"Error parsing users response: {ex.Message}"); 
                     callback(null, "Error parsing response.");
                 }
             }

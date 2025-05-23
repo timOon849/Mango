@@ -19,7 +19,7 @@ public class LeaderboardManager : MonoBehaviour
             if (users != null)
             {
                 // Sort users by coins in descending order
-                users.Sort((x, y) => y.coins.CompareTo(x.coins));
+                users.Sort((x, y) => y.points.CompareTo(x.points));
                 UpdateLeaderboard(users);
             }
             else
