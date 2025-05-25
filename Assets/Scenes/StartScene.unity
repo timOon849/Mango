@@ -351,7 +351,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: sound off
+  m_Text: Chat With others
 --- !u!222 &108705185
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1680,7 +1680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1df72e8e31a6e649a3dfe2a8d11de90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: SampleScene
+  sceneName: ChatScene
 --- !u!114 &1333509282
 MonoBehaviour:
   m_ObjectHideFlags: 0

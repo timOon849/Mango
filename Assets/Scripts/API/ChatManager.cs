@@ -1,13 +1,20 @@
 using Microsoft.AspNet.SignalR.Client;
 using System;
+using TMPro;
 using UnityEditor.VersionControl;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChatManager : MonoBehaviour
 {
     private HubConnection connection;
     private IHubProxy chatHubProxy;
-
+    [SerializeField] private InputField inputField;
+    [SerializeField] private Transform chatContentArea; // Content из ScrollView
+    [SerializeField] private GameObject myMessagePrefab;  // Префаб своего сообщения
+    [SerializeField] private GameObject otherMessagePrefab; // Префаб чужого сообщения
+    [SerializeField] private ScrollRect scrollRect; // ScrollRect из ScrollView
+    private string username = "Player"; // Можно заменить на ввод с клавиатуры
     private void Start()
     {
         ConnectToChat();
@@ -19,16 +26,16 @@ public class ChatManager : MonoBehaviour
         {
             // Создаем подключение
             connection = new HubConnection("http://localhost:5295/");
-            chatHubProxy = connection.CreateHubProxy("ChatHub");
+            chatHubProxy = connection.CreateHubProxy("/chatHub");
 
             // Подключаемся к серверу
             connection.Start().Wait();
 
             // Обрабатываем входящие сообщения
-            chatHubProxy.On<string, string>("ReceiveMessage", (user, message) =>
+            chatHubProxy.On<string, string>("ReceiveMessage", (message, senderId) =>
             {
-                Debug.Log($"[{user}]: {message}");
-                DisplayMessage(user, message);
+                Debug.Log($"[{senderId}]: {message}");
+                DisplayMessage( senderId, message);
             });
 
             Debug.Log("Connected to chat hub.");
@@ -54,10 +61,30 @@ public class ChatManager : MonoBehaviour
             }
         }
     }
-
-    private void DisplayMessage(string user, string message)
+    public void OnSendButtonClicked()
     {
-        // Здесь добавьте логику отображения сообщений в UI
-        Debug.Log($"Displaying message: [{user}]: {message}");
+        string message = inputField.text.Trim();
+        if (!string.IsNullOrEmpty(message))
+        {
+            SendChatMessage(username, message);
+            inputField.text = "";
+            DisplayMessage(username, message, true); // Отображаем сразу
+        }
+    }
+
+    private void DisplayMessage(string user, string message, bool isMine = false)
+    {
+        GameObject prefab = isMine ? myMessagePrefab : otherMessagePrefab;
+        GameObject messageGO = Instantiate(prefab, chatContentArea);
+
+        TextMeshProUGUI textComponent = messageGO.GetComponentInChildren<TextMeshProUGUI>();
+        if (textComponent != null)
+        {
+            textComponent.text = $"<b>{user}</b>: {message}";
+        }
+
+        // Авто-прокрутка вниз
+        Canvas.ForceUpdateCanvases();
+        scrollRect.verticalNormalizedPosition = 0f;
     }
 }
